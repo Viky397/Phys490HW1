@@ -26,8 +26,8 @@ def analytic(x, y):
 
     w_star = np.around(np.dot((np.linalg.inv(np.dot(x.T, x))), np.dot(x.T, y)), decimals=1)
 
-    # Writing the data to a txt file
-    out_file = open("1_test.out","w+")
+    # Writing the data to a .txt file
+    out_file = open("output.out","w+")
     for i in w_star:
         out_file.write(str(i))
         out_file.write("\n")
@@ -37,35 +37,37 @@ def analytic(x, y):
 
 def gradient_descent(x, y):
 
+    # Extracting the learning rate and number of iterations from .json
     with open(args.input_json) as input_json:
         parsed_json = json.load(input_json)
         learning_rate = parsed_json["learning rate"]
         num_iter = parsed_json["num iter"]
-        # print(learning_rate, num_iter)
     
+    # Declare an array of zeros, with the same number of rows as 'x'
     w = np.zeros((np.shape(x)[1]))
 
     for i in range(num_iter):
 
+        # Choosing a random row from 'x'
         rand_row = random.randint(0, (len(x)-1))
 
+        # '@' is matrix multiplication
         derivative_J = ((w.T @ x[rand_row,:])- y[rand_row]) * x[rand_row,:]
         w = w - learning_rate * derivative_J
-        print(w)
-
-    out_file = open("1_test.out")
+    
+    # Appending the data to the existing .txt file
+    out_file = open("output.out", 'a')
     for i in w:
         out_file.write(str(i))
         out_file.write("\n")
    
-
-
 if __name__ == "__main__":
     
     args = argparser()
 
     input_file = np.loadtxt(args.input_file)
     x_vals, y = input_file[:,:-1], input_file[:, -1]
+    # Adding the bias column of ones to 'x'
     x_constant = np.ones((len(y), 1))
     x = np.column_stack((x_constant, x_vals))
 
