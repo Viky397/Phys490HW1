@@ -5,6 +5,7 @@ import argparse
 import json
 import matplotlib.pyplot as plt
 import random
+import os
 
 # A function to create command line flags
 
@@ -27,7 +28,7 @@ def analytic(x, y):
     w_star = np.around(np.dot((np.linalg.inv(np.dot(x.T, x))), np.dot(x.T, y)), decimals=1)
 
     # Writing the data to a .txt file
-    out_file = open("output.out","w+")
+    out_file = open(output,"w+")
     for i in w_star:
         out_file.write(str(i))
         out_file.write("\n")
@@ -56,7 +57,7 @@ def gradient_descent(x, y):
         w = w - learning_rate * derivative_J
     
     # Appending the data to the existing .txt file
-    out_file = open("output.out", 'a')
+    out_file = open(output, 'a')
     for i in w:
         out_file.write(str(i))
         out_file.write("\n")
@@ -67,6 +68,8 @@ if __name__ == "__main__":
 
     input_file = np.loadtxt(args.input_file)
     x_vals, y = input_file[:,:-1], input_file[:, -1]
+    output = str((((os.path.split(args.input_file))[1]).split('.'))[0]) + ".out"
+ 
     # Adding the bias column of ones to 'x'
     x_constant = np.ones((len(y), 1))
     x = np.column_stack((x_constant, x_vals))
