@@ -3,7 +3,6 @@
 import numpy as np
 import argparse
 import json
-import matplotlib.pyplot as plt
 import random
 import os
 
