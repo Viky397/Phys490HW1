@@ -1,6 +1,17 @@
-## Homework 1
+# Assignment *1*
 
-### Running main.py
+- name: *Veronica Chatrath*
+- student ID: *20609717*
+
+## Dependencies
+
+- json
+- numpy
+- argparse
+- random
+- os
+
+## Running `main.py`
 
 To run `main.py`, enter the path to the required flags in the command line, as follows:
 
